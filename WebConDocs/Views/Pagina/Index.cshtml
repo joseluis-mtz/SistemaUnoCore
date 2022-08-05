@@ -1,0 +1,60 @@
+﻿@using WebConDocs.Clases
+@model IEnumerable<clsPagina>
+
+@{
+    ViewData["Title"] = "Index";
+    string cadena = ViewBag.cadena;
+}
+
+<form id="buscarPaginaForm" asp-controller="Pagina" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
+    <label>Escribe el mensaje</label>
+    @*Se debe poner el name con el nombre de la propiedad de la clase que se va a mapear*@
+    <input type="text" class="form form-control" name="mensaje" id="mensaje" value="@cadena"/>
+    <input type="submit" value="Buscar" class="btn btn-info"/>
+    <input type="button" value="Limpiar" class="btn btn-warning" onclick="Limpiar()"/>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.iidpagina)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.mensaje)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.accion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.controller)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.iidpagina)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.mensaje)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.accion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.controller)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    function Limpiar()
+    {
+        document.getElementById("mensaje").value = "";
+        document.getElementById("buscarPaginaForm").submit();
+    }
+</script>

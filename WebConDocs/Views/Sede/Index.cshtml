@@ -1,0 +1,60 @@
+﻿@using WebConDocs.Clases
+@model IEnumerable<clsSedes>
+
+@{
+    ViewData["Title"] = "Index";
+    string cadena = ViewBag.Cadena;
+}
+
+<h1>Index</h1>
+
+<form id="buscarSedeForm" asp-controller="Sede" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
+    <label>Escribe el nombre de la sede</label>
+    @*Se debe poner el name con el nombre de la propiedad de la clase que se va a mapear*@
+    <input type="text" class="form form-control" name="nombreSede" id="nombreSede" value="@cadena" onkeyup="Buscar()"/>
+    <input type="submit" value="Buscar" class="btn btn-info"/>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.iidSede)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreSede)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.direccion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.iidSede)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreSede)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.direccion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.iidSede">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.iidSede">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.iidSede">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    function Buscar()
+    {
+        document.getElementById("buscarSedeForm").submit();
+    }
+</script>

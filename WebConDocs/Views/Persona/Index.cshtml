@@ -1,0 +1,45 @@
+﻿@using WebConDocs.Clases;
+@model IEnumerable<clsPersona>;
+@{
+    ViewData["Title"] = "Index";
+    List<SelectListItem> listaSexos = ViewBag.listaSexos;
+}
+
+<h1>Index</h1>
+
+<form id="buscarSexoForm" asp-controller="Persona" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
+    <label>Lista de sexos</label>
+    @Html.DropDownList("iidSexo", listaSexos, new {@class= "form form-control"})
+    <input type="submit" value="Buscar" class="btn btn-info"/>
+    <input type="button" value="Limpiar" class="btn btn-warning" onclick="Limpiar()"/>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(modelo => modelo.iidPersona)</th>
+            <th>@Html.DisplayNameFor(modelo => modelo.nombreCompleto)</th>
+            <th>@Html.DisplayNameFor(modelo => modelo.email)</th>
+            <th>@Html.DisplayNameFor(modelo => modelo.nombreSexo)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(clsPersona fila in Model)
+        {
+            <tr>
+                <td>@fila.iidPersona</td>
+                <td>@fila.nombreCompleto</td>
+                <td>@fila.email</td>
+                <td>@fila.nombreSexo</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function Limpiar()
+    {
+        document.getElementById("iidSexo").value = "";
+        document.getElementById("buscarSexoForm").submit();
+    }
+</script>

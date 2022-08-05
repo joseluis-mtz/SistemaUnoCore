@@ -1,0 +1,67 @@
+﻿@using WebConDocs.Clases;
+@model IEnumerable<clsMedicamento>
+
+@{
+    ViewData["Title"] = "Index";
+    List<SelectListItem> listaForma = ViewBag.listaForma;
+}
+
+<h1>Index</h1>
+
+<form id="buscarFormaForm" asp-controller="Medicamento" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
+    <label>Lista de formas farmaceuticas</label>
+    @Html.DropDownList("iidFormaFarmaceutica", listaForma, new {@class= "form form-control"})
+</form>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.iidmedicamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.precio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.stock)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.nombreFormaFarmaceutica)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.iidmedicamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.precio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.stock)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreFormaFarmaceutica)
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+<script>
+    var iidFormaFarmaceutica = document.getElementById("iidFormaFarmaceutica");
+    iidFormaFarmaceutica.onchange = function() { 
+        document.getElementById("buscarFormaForm").submit();
+    };
+</script>

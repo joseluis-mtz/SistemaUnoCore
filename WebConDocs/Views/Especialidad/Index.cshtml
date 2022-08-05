@@ -1,0 +1,45 @@
+﻿@using WebConDocs.Models;
+@using WebConDocs.Clases;
+@model IEnumerable<clsEspecialidad>
+@{
+    ViewData["Title"] = "Index";
+    string cadena = ViewBag.Cadena;
+}
+
+<h1>Index</h1>
+
+<form id="buscarEspecialidadForm" asp-controller="Especialidad" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
+    <label>Escribe el nombre de la especialidad</label>
+    @*Se debe poner el name con el nombre de la propiedad de la clase que se va a mapear*@
+    <input type="text" class="form form-control" name="nombre" id="nombre" value="@cadena"/>
+    <input type="submit" value="Buscar" class="btn btn-info"/>
+    <input type="button" value="Limpiar" class="btn btn-warning" onclick="Limpiar()"/>
+</form>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(clsEspecialidad fila in Model)
+        {
+            <tr>
+                <td>@fila.iidespecialidad</td>
+                <td>@fila.nombre</td>
+                <td>@fila.descripcion</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    function Limpiar()
+    {
+        document.getElementById("nombre").value = "";
+        document.getElementById("buscarEspecialidadForm").submit();
+    }
+</script>
