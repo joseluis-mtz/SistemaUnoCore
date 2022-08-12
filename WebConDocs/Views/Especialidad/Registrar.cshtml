@@ -1,0 +1,57 @@
+﻿@using WebConDocs.Clases;
+@*Cuando se va hacer una acción de agregar solo se pone la clase, no un Ienumerable*@
+@model clsEspecialidad;
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h1>Registrar nueva especialidad</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Registrar" asp-controller="Especialidad" method="post" id="frmNuevaEsp">
+            <div class="form-group">
+                <label asp-for="nombre"></label>
+                <input asp-for="nombre" class="form form-control"/>
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="descripcion"></label>
+                <input asp-for="descripcion" class="form form-control"/>
+                <span asp-validation-for="descripcion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @*<input type="submit" value="Registrar" class="btn btn-success"/>*@
+                <input type="button" value="Registrar" class="btn btn-success" onclick="OpenModalMio()"/>
+                <a asp-action="Index" asp-controller="Especialidad" class="btn btn-danger">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@*<script src="sweetalert2.all.min.js"></script>*@
+
+<script>
+    function OpenModalMio()
+    {
+        Swal.fire({
+          title: '¿Estás seguro?',
+          text: "Está acción guardara la especialidad",
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Sí, Confirmar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+              var frmNuevaEsp = document.getElementById("frmNuevaEsp");
+              frmNuevaEsp.submit();
+          }
+        })
+    }
+</script>
+

@@ -41,5 +41,38 @@ namespace WebConDocs.Controllers
             }
                 return View(lista);
         }
+        public IActionResult Registrar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Registrar(clsEspecialidad objEspecialidad)
+        {
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return View(objEspecialidad);
+                    }
+                    else
+                    {
+                        Especialidad objInsertar = new Especialidad();
+                        objInsertar.Nombre = objEspecialidad.nombre;
+                        objInsertar.Descripcion = objEspecialidad.descripcion;
+                        objInsertar.Bhabilitado = 1;
+                        db.Especialidads.Add(objInsertar);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception Ex)
+            {
+                return View(objEspecialidad);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
