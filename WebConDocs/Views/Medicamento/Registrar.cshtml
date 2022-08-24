@@ -1,0 +1,73 @@
+﻿@using WebConDocs.Clases;
+@model clsMedicamento;
+@{
+    ViewData["Title"] = "Registrar";
+    List<SelectListItem> ListaFormas = ViewBag.ListaFormas;
+}
+
+<h1>Registrar nuevo medicamento</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Registrar" asp-controller="Medicamento" method="post" id="frmNuevoMed">
+            <div class="form-group">
+                <label asp-for="nombre"></label>
+                <input type="text" asp-for="nombre" class="form form-control"/>
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="concentracion"></label>
+                <input type="text" asp-for="concentracion" class="form form-control"/>
+                <span asp-validation-for="concentracion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="stock"></label>
+                <input type="number" asp-for="stock" class="form form-control"/>
+                <span asp-validation-for="stock" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="precio"></label>
+                <input type="text" asp-for="precio" class="form form-control"/>
+                <span asp-validation-for="precio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="iidFormaFarmaceutica"></label>
+                <select asp-for="iidFormaFarmaceutica" class="form form-control" asp-items="@ListaFormas">
+                </select>
+                <span asp-validation-for="iidFormaFarmaceutica" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="presentacion"></label>
+                <input type="text" asp-for="presentacion" class="form form-control"/>
+                <span asp-validation-for="presentacion" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                @*<input type="submit" value="Registrar" class="btn btn-success"/>*@
+                <input type="button" value="Registrar" class="btn btn-success" onclick="OpenModalMio()"/>
+                <a asp-action="Index" asp-controller="Medicamento" class="btn btn-danger">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
+<script>
+    function OpenModalMio()
+    {
+        MostrarModal().then(res => { 
+            if (res.value) {
+                var frmNuevoMed = document.getElementById("frmNuevoMed");
+                frmNuevoMed.submit();
+            }
+        })
+    }
+</script>
