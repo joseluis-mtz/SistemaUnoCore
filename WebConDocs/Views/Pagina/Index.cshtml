@@ -6,6 +6,8 @@
     string cadena = ViewBag.cadena;
 }
 
+<a class="btn btn-primary" asp-action="Agregar" asp-controller="Pagina">Nuevo</a>
+
 <form id="buscarPaginaForm" asp-controller="Pagina" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
     <label>Escribe el mensaje</label>
     @*Se debe poner el name con el nombre de la propiedad de la clase que se va a mapear*@

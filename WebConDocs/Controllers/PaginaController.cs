@@ -40,5 +40,40 @@ namespace WebConDocs.Controllers
             }
                 return View(lista);
         }
+
+        public IActionResult Agregar()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Agregar(clsPagina paPagina)
+        {
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return View(paPagina);
+                    }
+                    else
+                    {
+                        Pagina NuevaPagina = new Pagina();
+                        NuevaPagina.Mensaje = paPagina.mensaje;
+                        NuevaPagina.Accion = paPagina.accion;
+                        NuevaPagina.Controlador = paPagina.controller;
+                        NuevaPagina.Bhabilitado = 1;
+                        db.Paginas.Add(NuevaPagina);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return View(paPagina);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

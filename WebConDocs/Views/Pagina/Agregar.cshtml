@@ -1,0 +1,49 @@
+﻿@model WebConDocs.Clases.clsPagina
+
+@{
+    ViewData["Title"] = "Agregar";
+}
+
+<h1>Agregar Pagina</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Agregar" asp-controller="Pagina" method="post" id="frmNuevaPag">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="mensaje" class="control-label"></label>
+                <input asp-for="mensaje" class="form-control" />
+                <span asp-validation-for="mensaje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="accion" class="control-label"></label>
+                <input asp-for="accion" class="form-control" />
+                <span asp-validation-for="accion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="controller" class="control-label"></label>
+                <input asp-for="controller" class="form-control" />
+                <span asp-validation-for="controller" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Agregar" class="btn btn-primary" onclick="OpenModalMio()"/>
+                <a class="btn btn-danger" asp-action="Index" asp-controller="Pagina">Regrear</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
+<script>
+    function OpenModalMio()
+    {
+        MostrarModal().then(res => { 
+            if (res.value) {
+                var frmNuevaPag = document.getElementById("frmNuevaPag");
+                frmNuevaPag.submit();
+            }
+        })
+    }
+</script>
