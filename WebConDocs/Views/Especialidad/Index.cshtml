@@ -31,6 +31,11 @@
                 <td>@fila.iidespecialidad</td>
                 <td>@fila.nombre</td>
                 <td>@fila.descripcion</td>
+                <td>
+                    <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarEspecialidad(@fila.iidespecialidad)">
+
+                    </i>
+                </td>
             </tr>
         }
     </tbody>
@@ -42,4 +47,9 @@
         document.getElementById("nombre").value = "";
         document.getElementById("buscarEspecialidadForm").submit();
     }
+
+function EliminarEspecialidad(idEspecialidad) 
+{
+    
+}
 </script>
