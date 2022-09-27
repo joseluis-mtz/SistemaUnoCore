@@ -62,5 +62,48 @@ namespace WebConDocs.Controllers
             }
                 return View(lista);
         }
+
+        public IActionResult Agregar()
+        {
+            LlenarComboSexo();
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Agregar(clsPersona objPersona)
+        {
+            LlenarComboSexo();
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(objPersona);
+                }
+                else
+                {
+                    using (BDHospitalContext db = new BDHospitalContext())
+                    {
+                        Persona nuevaPersona = new Persona();
+                        nuevaPersona.Nombre = objPersona.nombre;
+                        nuevaPersona.Appaterno = objPersona.aPaterno;
+                        nuevaPersona.Apmaterno = objPersona.aMaterno;
+                        nuevaPersona.Telefonofijo = objPersona.telefonoFijo;
+                        nuevaPersona.Telefonocelular = objPersona.telefonoCelular;
+                        nuevaPersona.Fechanacimiento = objPersona.fechaNacimiento;
+                        nuevaPersona.Direccion = objPersona.direccion;
+                        nuevaPersona.Email = objPersona.email;
+                        nuevaPersona.Iidsexo = objPersona.iidSexo;
+                        nuevaPersona.Bhabilitado = 1;
+                        db.Personas.Add(nuevaPersona);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return View(objPersona);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

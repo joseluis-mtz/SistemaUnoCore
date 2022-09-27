@@ -1,0 +1,83 @@
+﻿@model WebConDocs.Clases.clsPersona
+
+@{
+    ViewData["Title"] = "Agregar";
+    List<SelectListItem> ListaSexos = ViewBag.listaSexos;
+}
+
+<h1>Agregar persona</h1>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Agregar" asp-controller="Persona" method="post" id="frmNuevaPersona">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aPaterno" class="control-label"></label>
+                <input asp-for="aPaterno" class="form-control" />
+                <span asp-validation-for="aPaterno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="aMaterno" class="control-label"></label>
+                <input asp-for="aMaterno" class="form-control" />
+                <span asp-validation-for="aMaterno" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="email" class="control-label"></label>
+                <input asp-for="email" class="form-control" />
+                <span asp-validation-for="email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="telefonoFijo" class="control-label"></label>
+                <input asp-for="telefonoFijo" class="form-control" />
+                <span asp-validation-for="telefonoFijo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="telefonoCelular" class="control-label"></label>
+                <input asp-for="telefonoCelular" class="form-control" />
+                <span asp-validation-for="telefonoCelular" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="fechaNacimiento" class="control-label"></label>
+                <input asp-for="fechaNacimiento" class="form-control" />
+                <span asp-validation-for="fechaNacimiento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="iidSexo" class="control-label"></label>
+                <select asp-for="iidSexo" class ="form-control" asp-items="@ListaSexos">
+
+                </select>
+            </div>
+           
+            <div class="form-group">
+                <input type="button" value="Guardar" class="btn btn-success" onclick="OpenModalMio()"/>
+                 <a value="Cancelar" class="btn btn-danger" asp-action="Index" asp-controller="Persona" > Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
+<script>
+    function OpenModalMio()
+    {
+        MostrarModal().then(res => { 
+            if (res.value) {
+                var frmNuevaPersona = document.getElementById("frmNuevaPersona");
+                frmNuevaPersona.submit();
+            }
+        })
+    }
+</script>
