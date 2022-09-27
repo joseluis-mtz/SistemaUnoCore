@@ -29,7 +29,7 @@ namespace WebConDocs.Controllers
             List<clsPersona> lista = new List<clsPersona>();
             using (BDHospitalContext db = new BDHospitalContext())
             {
-                if (objPersona.iidSexo == 0)
+                if (objPersona.iidSexo == 0 || objPersona.iidSexo == null)
                 {
                     lista = (from persona in db.Personas
                              join sexos in db.Sexos
