@@ -41,6 +41,13 @@
     </tbody>
 </table>
 
+<form asp-action="Eliminar" method="post" asp-controller="Especialidad" id="frmEliminarEspecialidad">
+    <input type="text" hidden id="txtIdEspecialidad" name="iidespecialidad"/>
+</form>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
 <script>
     function Limpiar()
     {
@@ -50,6 +57,12 @@
 
 function EliminarEspecialidad(idEspecialidad) 
 {
-    
+    document.getElementById("txtIdEspecialidad").value = idEspecialidad;
+    MostrarModal().then(res => { 
+            if (res.value) {
+                var frmEliminarEspecialidad = document.getElementById("frmEliminarEspecialidad");
+                frmEliminarEspecialidad.submit();
+            }
+        })
 }
 </script>

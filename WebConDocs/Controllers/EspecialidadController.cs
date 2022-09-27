@@ -74,5 +74,26 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        [HttpPost]
+        public IActionResult Eliminar(int iidespecialidad)
+        {
+            string error = "";
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    Especialidad objEspecialidad = db.Especialidads.Where(x => x.Iidespecialidad == iidespecialidad).First();
+                    objEspecialidad.Bhabilitado = 0;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                error = ex.Message;
+                return View();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
