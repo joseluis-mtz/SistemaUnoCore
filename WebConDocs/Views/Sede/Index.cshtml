@@ -43,18 +43,34 @@
                 @Html.DisplayFor(modelItem => item.direccion)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.iidSede">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.iidSede">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.iidSede">Delete</a>
+                <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarSede(@item.iidSede)"></i>                
             </td>
         </tr>
 }
     </tbody>
 </table>
 
+<form asp-action="Eliminar" method="post" asp-controller="Sede" id="frmEliminarSede">
+    <input type="text" hidden id="txtSede" name="iidSede"/>
+</form>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
 <script>
     function Buscar()
     {
         document.getElementById("buscarSedeForm").submit();
+    }
+
+    function EliminarSede(iidSede) 
+    {
+        document.getElementById("txtSede").value = iidSede;
+        MostrarModal().then(res => { 
+                if (res.value) {
+                    var frmEliminarSede = document.getElementById("frmEliminarSede");
+                    frmEliminarSede.submit();
+                }
+            })
     }
 </script>

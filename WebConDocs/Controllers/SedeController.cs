@@ -39,5 +39,25 @@ namespace WebConDocs.Controllers
             }
                 return View(lista);
         }
+
+        public IActionResult Eliminar(int iidSede)
+        {
+            string mensaje = "";
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    Sede objSede = db.Sedes.Where(x => x.Iidsede == iidSede).First();
+                    objSede.Bhabilitado = 0;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return View();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
