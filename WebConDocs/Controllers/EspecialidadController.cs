@@ -47,7 +47,8 @@ namespace WebConDocs.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registrar(clsEspecialidad objEspecialidad)
+        //public IActionResult Registrar(clsEspecialidad objEspecialidad)
+        public IActionResult Guardar(clsEspecialidad objEspecialidad)
         {
             try
             {
@@ -59,12 +60,25 @@ namespace WebConDocs.Controllers
                     }
                     else
                     {
-                        Especialidad objInsertar = new Especialidad();
-                        objInsertar.Nombre = objEspecialidad.nombre;
-                        objInsertar.Descripcion = objEspecialidad.descripcion;
-                        objInsertar.Bhabilitado = 1;
-                        db.Especialidads.Add(objInsertar);
-                        db.SaveChanges();
+                        if (objEspecialidad.iidespecialidad == 0)
+                        {
+                            // Si ID = 0 entonces agregar
+                            Especialidad objInsertar = new Especialidad();
+                            objInsertar.Nombre = objEspecialidad.nombre;
+                            objInsertar.Descripcion = objEspecialidad.descripcion;
+                            objInsertar.Bhabilitado = 1;
+                            db.Especialidads.Add(objInsertar);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            // Si ID diferente de 0 entonces editar
+                            Especialidad objActualizar = db.Especialidads.Where(x => x.Iidespecialidad == objEspecialidad.iidespecialidad).First();
+                            objActualizar.Nombre = objEspecialidad.nombre;
+                            objActualizar.Descripcion = objEspecialidad.descripcion;
+                            db.SaveChanges();
+                        }
+                        
                     }
                 }
             }
@@ -95,12 +109,6 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
-
-        //public IActionResult Editar()
-        //{
-        //    return View();
-        //}
-
         public IActionResult Editar(int iidespecialidad)
         {
             string mensaje = "";

@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Editar" asp-controller="Especialidad">
+        <form asp-action="Guardar" asp-controller="Especialidad" id="frmEditarEspecialidad">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="iidespecialidad" />
             <div class="form-group">
@@ -30,3 +30,20 @@
         </form>
     </div>
 </div>
+
+ <script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
+<script>
+
+function EliminarEspecialidad(idEspecialidad) 
+{
+    document.getElementById("txtIdEspecialidad").value = idEspecialidad;
+    MostrarModal().then(res => { 
+            if (res.value) {
+                var frmEditarEspecialidad = document.getElementById("frmEditarEspecialidad");
+                frmEditarEspecialidad.submit();
+            }
+        })
+}
+</script>
