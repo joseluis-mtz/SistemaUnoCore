@@ -83,5 +83,25 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult Eliminar(int iidTipoUsuario)
+        {
+            string mensaje = "";
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    TipoUsuario objTipoUsuario = db.TipoUsuarios.Where(x => x.Iidtipousuario == iidTipoUsuario).First();
+                    db.TipoUsuarios.Remove(objTipoUsuario);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return View();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

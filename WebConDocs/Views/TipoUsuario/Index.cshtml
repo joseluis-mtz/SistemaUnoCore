@@ -41,6 +41,7 @@
             <th>
                 <input type="text" value="@descripcion" name="descripcion" class="form form-control"/>
             </th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -55,8 +56,31 @@
             <td>
                 @Html.DisplayFor(modelItem => item.descripcion)
             </td>
+            <td>
+                <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarTipoUsuario(@item.iidTipoUsuario)"></i>
+            </td>
         </tr>
 }
     </tbody>
 </table>
 </form>
+
+<form asp-action="Eliminar" method="post" asp-controller="TipoUsuario" id="frmEliminarTipoUsuario">
+    <input type="text" hidden id="txtIdUsuario" name="iidTipoUsuario"/>
+</form>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
+<script>
+    function EliminarTipoUsuario(iidTipoUsuario) 
+    {
+        document.getElementById("txtIdUsuario").value = iidTipoUsuario;
+        MostrarModal().then(res => { 
+                if (res.value) {
+                    var frmEliminarTipoUsuario = document.getElementById("frmEliminarTipoUsuario");
+                    frmEliminarTipoUsuario.submit();
+                }
+            })
+    }
+</script>
