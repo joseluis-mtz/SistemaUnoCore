@@ -33,6 +33,7 @@ namespace WebConDocs.Clases
 
 
         [Display(Name = "Apellido materno")]
+        [Required(ErrorMessage = "Campo obligatorio")]
         public string aMaterno { get; set; }
 
         

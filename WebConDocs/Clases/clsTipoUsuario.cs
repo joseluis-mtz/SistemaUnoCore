@@ -6,9 +6,15 @@ namespace WebConDocs.Clases
     {
         [Display(Name ="Id Tipo Usuario")]
         public int iidTipoUsuario { get; set; }
+
+
         [Display(Name = "Nombre de Usuario")]
+        [Required(ErrorMessage = "Campo obligatorio")]
         public string nombre { get; set; }
+
+
         [Display(Name = "Descripción")]
+        [Required(ErrorMessage = "Campo obligatorio")]
         public string descripcion { get; set; }
 
     }

@@ -48,5 +48,40 @@ namespace WebConDocs.Controllers
             }
             return View(lista);
         }
+
+        public IActionResult Agregar()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Agregar(clsTipoUsuario objTipoUsuario)
+        {
+            string mensaje = "";
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View(objTipoUsuario);
+                }
+                else
+                {
+                    using (BDHospitalContext db = new BDHospitalContext())
+                    {
+                        TipoUsuario nuevoTipoUsuario = new TipoUsuario();
+                        nuevoTipoUsuario.Nombre = objTipoUsuario.nombre;
+                        nuevoTipoUsuario.Descripcion = objTipoUsuario.descripcion;
+                        nuevoTipoUsuario.Bhabilitado = 1;
+                        db.TipoUsuarios.Add(nuevoTipoUsuario);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return View(objTipoUsuario);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
