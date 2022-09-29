@@ -50,13 +50,22 @@ namespace WebConDocs.Controllers
         //public IActionResult Registrar(clsEspecialidad objEspecialidad)
         public IActionResult Guardar(clsEspecialidad objEspecialidad)
         {
+            string nombreVista = "";
             try
             {
+                if (objEspecialidad.iidespecialidad == 0)
+                {
+                    nombreVista = "Registrar";
+                }
+                else
+                {
+                    nombreVista = "Editar";
+                }
                 using (BDHospitalContext db = new BDHospitalContext())
                 {
                     if (!ModelState.IsValid)
                     {
-                        return View(objEspecialidad);
+                        return View(nombreVista, objEspecialidad);
                     }
                     else
                     {
@@ -84,7 +93,7 @@ namespace WebConDocs.Controllers
             }
             catch (Exception Ex)
             {
-                return View(objEspecialidad);
+                return View(nombreVista, objEspecialidad);
             }
             return RedirectToAction("Index");
         }
