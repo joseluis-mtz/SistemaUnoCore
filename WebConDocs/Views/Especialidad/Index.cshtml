@@ -32,9 +32,10 @@
                 <td>@fila.nombre</td>
                 <td>@fila.descripcion</td>
                 <td>
-                    <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarEspecialidad(@fila.iidespecialidad)">
-
-                    </i>
+                    <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarEspecialidad(@fila.iidespecialidad)"></i>
+                </td>
+                <td>
+                    <a class="fa-solid fa-pen-to-square btn btn-primary" asp-action="Editar" asp-controller="Especialidad" asp-route-iidespecialidad="@fila.iidespecialidad"></a>
                 </td>
             </tr>
         }

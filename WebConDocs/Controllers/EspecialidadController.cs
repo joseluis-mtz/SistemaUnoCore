@@ -95,5 +95,36 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        //public IActionResult Editar()
+        //{
+        //    return View();
+        //}
+
+        public IActionResult Editar(int iidespecialidad)
+        {
+            string mensaje = "";
+            clsEspecialidad objEspecialidad = new clsEspecialidad();
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    objEspecialidad = (from especialidad in db.Especialidads
+                                       where especialidad.Iidespecialidad == iidespecialidad
+                                       select new clsEspecialidad
+                                       {
+                                           iidespecialidad = especialidad.Iidespecialidad,
+                                           nombre = especialidad.Nombre,
+                                           descripcion = especialidad.Descripcion
+                                       }).First();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return RedirectToAction("Index");
+            }
+            return View(objEspecialidad);
+        }
     }
 }
