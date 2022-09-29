@@ -75,5 +75,26 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult Eliminar(int iidpagina)
+        {
+            string mensaje = "";
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    Pagina objPagina = db.Paginas.Where(x => x.Iidpagina == iidpagina).First();
+                    db.Paginas.Remove(objPagina);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return View();
+            }
+            return RedirectToAction("Index");
+
+        }
     }
 }

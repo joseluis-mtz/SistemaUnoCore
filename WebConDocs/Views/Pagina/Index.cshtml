@@ -31,6 +31,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.controller)
             </th>
+            <td></td>
         </tr>
     </thead>
     <tbody>
@@ -48,15 +49,36 @@
             <td>
                 @Html.DisplayFor(modelItem => item.controller)
             </td>
+            <td>
+                <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarPagina(@item.iidpagina)"></i>
+            </td>
         </tr>
 }
     </tbody>
 </table>
+
+<form asp-action="Eliminar" method="post" asp-controller="Pagina" id="frmEliminarPagina">
+    <input type="text" hidden id="txtIdPagina" name="iidpagina"/>
+</form>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
 
 <script>
     function Limpiar()
     {
         document.getElementById("mensaje").value = "";
         document.getElementById("buscarPaginaForm").submit();
+    }
+
+     function EliminarPagina(iidpagina) 
+    {
+        document.getElementById("txtIdPagina").value = iidpagina;
+        MostrarModal().then(res => { 
+                if (res.value) {
+                    var frmEliminarPagina = document.getElementById("frmEliminarPagina");
+                    frmEliminarPagina.submit();
+                }
+            })
     }
 </script>
