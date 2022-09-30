@@ -1,0 +1,33 @@
+﻿@model WebConDocs.Clases.clsSedes
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+
+<h4>Sede</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Guardar" asp-controller="Sede" id="frmEditarSede">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="iidSede" />
+            <div class="form-group">
+                <label asp-for="nombreSede" class="control-label"></label>
+                <input asp-for="nombreSede" class="form-control" />
+                <span asp-validation-for="nombreSede" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+                <a  class="btn btn-danger" asp-action="Index" asp-controller="Sede">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+

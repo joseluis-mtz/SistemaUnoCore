@@ -1,0 +1,47 @@
+﻿@model WebConDocs.Clases.clsSedes
+
+@{
+    ViewData["Title"] = "Registrar";
+}
+
+<h1>Registrar</h1>
+
+<h4>Sede</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Guardar" asp-controller="Sede" id="frmRegistrarSede">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="nombreSede" class="control-label"></label>
+                <input asp-for="nombreSede" class="form-control" />
+                <span asp-validation-for="nombreSede" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="direccion" class="control-label"></label>
+                <input asp-for="direccion" class="form-control" />
+                <span asp-validation-for="direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="button" value="Guardar" class="btn btn-success" onclick="OpenModalMio()"/>
+                <a asp-action="Index" asp-controller="Sede" class="btn btn-danger">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
+<script>
+    function OpenModalMio()
+    {
+        MostrarModal().then((result) => {
+          if (result.value) {
+              var frmRegistrarSede = document.getElementById("frmRegistrarSede");
+              frmRegistrarSede.submit();
+          }
+        })
+    }
+</script>
+

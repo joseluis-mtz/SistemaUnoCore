@@ -6,7 +6,7 @@
     string cadena = ViewBag.Cadena;
 }
 
-<h1>Index</h1>
+<a class="btn btn-secondary" asp-action="Guardar" asp-controller="Sede">Nuevo</a>
 
 <form id="buscarSedeForm" asp-controller="Sede" asp-action="Index" method="post" class="mb-2" style="display:grid; grid-template-columns: 1fr 2fr 1fr 1fr">
     <label>Escribe el nombre de la sede</label>
@@ -44,6 +44,9 @@
             </td>
             <td>
                 <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarSede(@item.iidSede)"></i>                
+            </td>
+            <td>
+                <a class="fa-solid fa-pen-to-square btn btn-primary" asp-action="Editar" asp-controller="Sede" asp-route-iidSede="@item.iidSede"></a>
             </td>
         </tr>
 }

@@ -59,5 +59,81 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult Guardar(clsSedes objSede)
+        {
+            string nombreVista = "";
+            try
+            {
+                if (objSede.iidSede == 0)
+                {
+                    nombreVista = "Registrar";
+                }
+                else
+                {
+                    nombreVista = "Editar";
+                }
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    if (!ModelState.IsValid)
+                    {
+                        return View(nombreVista, objSede);
+                    }
+                    else
+                    {
+                        if (objSede.iidSede == 0)
+                        {
+                            // Si ID = 0 entonces agregar
+                            Sede objInsertar = new Sede();
+                            objInsertar.Nombre = objSede.nombreSede;
+                            objInsertar.Direccion = objSede.direccion;
+                            objInsertar.Bhabilitado = 1;
+                            db.Sedes.Add(objInsertar);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            // Si ID diferente de 0 entonces editar
+                            Sede objActualizar = db.Sedes.Where(x => x.Iidsede == objSede.iidSede).First();
+                            objActualizar.Nombre = objSede.nombreSede;
+                            objActualizar.Direccion = objSede.direccion;
+                            db.SaveChanges();
+                        }
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return View(nombreVista, objSede);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult Editar(int iidSede)
+        {
+            string mensaje = "";
+            clsSedes objSede = new clsSedes();
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    objSede = (from sedes in db.Sedes
+                                       where sedes.Iidsede == iidSede
+                                       select new clsSedes
+                                       {
+                                           iidSede = sedes.Iidsede,
+                                           nombreSede = sedes.Nombre,
+                                           direccion = sedes.Direccion
+                                       }).First();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return RedirectToAction("Index");
+            }
+            return View(objSede);
+        }
     }
 }
