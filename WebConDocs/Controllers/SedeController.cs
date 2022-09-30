@@ -59,7 +59,10 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        public IActionResult Registrar()
+        {
+            return View();
+        }
         public IActionResult Guardar(clsSedes objSede)
         {
             string nombreVista = "";
