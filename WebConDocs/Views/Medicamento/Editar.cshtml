@@ -1,0 +1,53 @@
+﻿@model WebConDocs.Clases.clsMedicamento
+
+@{
+    ViewData["Title"] = "Editar";
+    List<SelectListItem> ListaFormas = ViewBag.ListaFormas;
+}
+
+<h1>Editar</h1>
+
+<h4>Medicamento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar" asp-controller="Medicamento" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="iidmedicamento" />
+            <div class="form-group">
+                <label asp-for="nombre" class="control-label"></label>
+                <input asp-for="nombre" class="form-control" />
+                <span asp-validation-for="nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="concentracion" class="control-label"></label>
+                <input asp-for="concentracion" class="form-control" />
+                <span asp-validation-for="concentracion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="iidFormaFarmaceutica" class="control-label"></label>
+                <select asp-for="iidFormaFarmaceutica" class="form-control" asp-items="@ListaFormas"></select>
+                <span asp-validation-for="iidFormaFarmaceutica" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="precio" class="control-label"></label>
+                <input asp-for="precio" class="form-control" />
+                <span asp-validation-for="precio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="stock" class="control-label"></label>
+                <input asp-for="stock" class="form-control" />
+                <span asp-validation-for="stock" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="presentacion" class="control-label"></label>
+                <input asp-for="presentacion" class="form-control" />
+                <span asp-validation-for="presentacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a  class="btn btn-danger" asp-action="Index" asp-controller="Medicamento">Regresar</a>
+            </div>
+        </form>
+    </div>
+</div>

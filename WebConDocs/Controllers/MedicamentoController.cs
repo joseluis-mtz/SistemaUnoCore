@@ -103,5 +103,27 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult Editar(int iidmedicamento)
+        {
+            clsMedicamento objMedicamento = new clsMedicamento();
+            using (BDHospitalContext db = new BDHospitalContext())
+            {
+                objMedicamento = (from medicamentos in db.Medicamentos
+                                                 where medicamentos.Iidmedicamento == iidmedicamento
+                                                 select new clsMedicamento
+                                                 {
+                                                     iidmedicamento = medicamentos.Iidmedicamento,
+                                                     nombre = medicamentos.Nombre,
+                                                     precio = medicamentos.Precio,
+                                                     stock = medicamentos.Stock,
+                                                     concentracion = medicamentos.Concentracion,
+                                                     presentacion = medicamentos.Presentacion,
+                                                     iidFormaFarmaceutica = medicamentos.Iidformafarmaceutica
+                                                 }).First();
+            }
+            ViewBag.ListaFormas = ListaFormasFarmaceuticas();
+            return View(objMedicamento);
+        }
     }
 }

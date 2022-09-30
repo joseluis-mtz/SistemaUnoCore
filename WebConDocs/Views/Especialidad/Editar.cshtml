@@ -25,25 +25,8 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Editar" class="btn btn-success" />
-                <a  class="btn btn-danger" asp-action="Index">Regresar</a>
+                <a  class="btn btn-danger" asp-action="Index" asp-controller="Especialidad">Regresar</a>
             </div>
         </form>
     </div>
 </div>
-
- <script src="~/js/LibreriaAlertas.js"></script>
-<script src="~/js/AlertasPropias.js"></script>
-
-<script>
-
-function EliminarEspecialidad(idEspecialidad) 
-{
-    document.getElementById("txtIdEspecialidad").value = idEspecialidad;
-    MostrarModal().then(res => { 
-            if (res.value) {
-                var frmEditarEspecialidad = document.getElementById("frmEditarEspecialidad");
-                frmEditarEspecialidad.submit();
-            }
-        })
-}
-</script>
