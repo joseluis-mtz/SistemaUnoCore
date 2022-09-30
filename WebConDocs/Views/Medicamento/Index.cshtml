@@ -53,6 +53,9 @@
                 @Html.DisplayFor(modelItem => item.nombreFormaFarmaceutica)
             </td>
             <td>
+                <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarMedicamento(@item.iidmedicamento)"></i>
+            </td>
+            <td>
                 <a class="fa-solid fa-pen-to-square btn btn-primary" asp-action="Editar" asp-controller="Medicamento" asp-route-iidmedicamento="@item.iidmedicamento"></a>
             </td>
         </tr>
@@ -60,9 +63,27 @@
     </tbody>
 </table>
 
+<form asp-action="Eliminar" method="post" asp-controller="Medicamento" id="frmEliminarMedicamento">
+    <input type="text" hidden id="txtIdMedicamento" name="iidmedicamento"/>
+</form>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
+
 <script>
     var iidFormaFarmaceutica = document.getElementById("iidFormaFarmaceutica");
     iidFormaFarmaceutica.onchange = function() { 
         document.getElementById("buscarFormaForm").submit();
     };
+
+    function EliminarMedicamento(iidmedicamento) 
+    {
+        document.getElementById("txtIdMedicamento").value = iidmedicamento;
+        MostrarModal().then(res => { 
+                if (res.value) {
+                    var frmEliminarMedicamento = document.getElementById("frmEliminarMedicamento");
+                    frmEliminarMedicamento.submit();
+                }
+            })
+    }
 </script>

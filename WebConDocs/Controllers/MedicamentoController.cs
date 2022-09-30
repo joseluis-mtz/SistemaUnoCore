@@ -149,5 +149,26 @@ namespace WebConDocs.Controllers
             ViewBag.ListaFormas = ListaFormasFarmaceuticas();
             return View(objMedicamento);
         }
+
+        public IActionResult Eliminar(int iidmedicamento)
+        {
+            string mensaje = "";
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    Medicamento objMedicamento = db.Medicamentos.Where(x => x.Iidmedicamento == iidmedicamento).First();
+                    db.Medicamentos.Remove(objMedicamento);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return View();
+            }
+            return RedirectToAction("Index");
+
+        }
     }
 }
