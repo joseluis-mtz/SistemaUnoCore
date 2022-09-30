@@ -105,5 +105,25 @@ namespace WebConDocs.Controllers
             }
             return RedirectToAction("Index");
         }
+
+        public IActionResult Eliminar(int iidPersona)
+        {
+            string mensaje = "";
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    Persona objPersona = db.Personas.Where(x => x.Iidpersona == iidPersona).First();
+                    objPersona.Bhabilitado = 0;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return View();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

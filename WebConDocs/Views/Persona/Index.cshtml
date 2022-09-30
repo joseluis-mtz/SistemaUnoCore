@@ -21,6 +21,7 @@
             <th>@Html.DisplayNameFor(modelo => modelo.nombreCompleto)</th>
             <th>@Html.DisplayNameFor(modelo => modelo.email)</th>
             <th>@Html.DisplayNameFor(modelo => modelo.nombreSexo)</th>
+            <th>Operaciones</th>
         </tr>
     </thead>
     <tbody>
@@ -31,15 +32,36 @@
                 <td>@fila.nombreCompleto</td>
                 <td>@fila.email</td>
                 <td>@fila.nombreSexo</td>
+                <td>
+                    <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarPersona(@fila.iidPersona)"></i>
+                </td>
             </tr>
         }
     </tbody>
 </table>
+
+<form asp-action="Eliminar" method="post" asp-controller="Persona" id="frmEliminarPersona">
+    <input type="text" hidden id="txtIdPersona" name="iidPersona"/>
+</form>
+
+<script src="~/js/LibreriaAlertas.js"></script>
+<script src="~/js/AlertasPropias.js"></script>
 
 <script>
     function Limpiar()
     {
         document.getElementById("iidSexo").value = "";
         document.getElementById("buscarSexoForm").submit();
+    }
+
+    function EliminarPersona(iidPersona) 
+    {
+        document.getElementById("txtIdPersona").value = iidPersona;
+        MostrarModal().then(res => { 
+                if (res.value) {
+                    var frmEliminarPersona = document.getElementById("frmEliminarPersona");
+                    frmEliminarPersona.submit();
+                }
+            })
     }
 </script>
