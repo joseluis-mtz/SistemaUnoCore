@@ -71,35 +71,59 @@ namespace WebConDocs.Controllers
         }
 
         [HttpPost]
-        public IActionResult Registrar(clsMedicamento objMedicamento)
+        public IActionResult Guardar(clsMedicamento objMedicamento)
         {
+            string nombreVista = "";
             try
             {
+                if (objMedicamento.iidmedicamento == 0)
+                {
+                    nombreVista = "Registrar";
+                }
+                else
+                {
+                    nombreVista = "Editar";
+                }
                 using (BDHospitalContext db = new BDHospitalContext())
                 {
                     if (!ModelState.IsValid)
                     {
                         ViewBag.ListaFormas = ListaFormasFarmaceuticas();
-                        return View(objMedicamento);
+                        return View(nombreVista,objMedicamento);
                     }
                     else
                     {
-                        Medicamento nuevoMed = new Medicamento();
-                        nuevoMed.Nombre = objMedicamento.nombre;
-                        nuevoMed.Concentracion = objMedicamento.concentracion;
-                        nuevoMed.Iidformafarmaceutica = objMedicamento.iidFormaFarmaceutica;
-                        nuevoMed.Precio = objMedicamento.precio;
-                        nuevoMed.Stock = objMedicamento.stock;
-                        nuevoMed.Presentacion = objMedicamento.presentacion;
-                        nuevoMed.Bhabilitado = 1;
-                        db.Medicamentos.Add(nuevoMed);
-                        db.SaveChanges();
+                        if (objMedicamento.iidmedicamento == 0)
+                        {
+                            Medicamento nuevoMed = new Medicamento();
+                            nuevoMed.Nombre = objMedicamento.nombre;
+                            nuevoMed.Concentracion = objMedicamento.concentracion;
+                            nuevoMed.Iidformafarmaceutica = objMedicamento.iidFormaFarmaceutica;
+                            nuevoMed.Precio = objMedicamento.precio;
+                            nuevoMed.Stock = objMedicamento.stock;
+                            nuevoMed.Presentacion = objMedicamento.presentacion;
+                            nuevoMed.Bhabilitado = 1;
+                            db.Medicamentos.Add(nuevoMed);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            Medicamento editarMed = db.Medicamentos.Where(x => x.Iidmedicamento == objMedicamento.iidmedicamento).First();
+                            editarMed.Nombre = objMedicamento.nombre;
+                            editarMed.Concentracion = objMedicamento.concentracion;
+                            editarMed.Iidformafarmaceutica = objMedicamento.iidFormaFarmaceutica;
+                            editarMed.Precio = objMedicamento.precio;
+                            editarMed.Stock = objMedicamento.stock;
+                            editarMed.Presentacion = objMedicamento.presentacion;
+                            db.SaveChanges();
+                        }
+                        
                     }
                 }
             }
-            catch (Exception Ex)
+            catch (Exception)
             {
-                return View(objMedicamento);
+                return View(nombreVista,objMedicamento);
             }
             return RedirectToAction("Index");
         }
