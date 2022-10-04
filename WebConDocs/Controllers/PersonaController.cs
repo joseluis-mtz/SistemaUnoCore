@@ -89,10 +89,10 @@ namespace WebConDocs.Controllers
             {
                 using (BDHospitalContext db = new BDHospitalContext())
                 {
-                    objPersona.nombreCompleto = objPersona.nombre + " " + objPersona.aPaterno + " " + objPersona.aMaterno;
+                    objPersona.nombreCompleto = objPersona.nombre.Trim().ToUpper() + " " + objPersona.aPaterno.Trim().ToUpper() + " " + objPersona.aMaterno.Trim().ToUpper();
                     if (objPersona.iidPersona == 0)
                     {
-                        VecesRepetidas = db.Personas.Where(x => x.Nombre + " " + x.Appaterno + " " + x.Apmaterno == objPersona.nombreCompleto).Count();
+                        VecesRepetidas = db.Personas.Where(x => x.Nombre.Trim().ToUpper() + " " + x.Appaterno.Trim().ToUpper() + " " + x.Apmaterno.Trim().ToUpper() == objPersona.nombreCompleto).Count();
                     }
 
                     if (!ModelState.IsValid || VecesRepetidas >=1)
