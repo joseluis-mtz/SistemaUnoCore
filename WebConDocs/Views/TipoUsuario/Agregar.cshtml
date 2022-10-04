@@ -10,17 +10,25 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Agregar" asp-controller="TipoUsuario" method="post" id="frmNuevoTipoUsuario">
+        <form asp-action="Guardar" asp-controller="TipoUsuario" method="post" id="frmNuevoTipoUsuario">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="nombre" class="control-label"></label>
                 <input asp-for="nombre" class="form-control" />
                 <span asp-validation-for="nombre" class="text-danger"></span>
+                @if (Model != null && (!string.IsNullOrEmpty(Model.MensajeErrorNombre)))
+                {
+                    <p class="text-danger">@Model.MensajeErrorNombre</p>
+                }
             </div>
             <div class="form-group">
                 <label asp-for="descripcion" class="control-label"></label>
                 <input asp-for="descripcion" class="form-control" />
                 <span asp-validation-for="descripcion" class="text-danger"></span>
+                @if (Model != null && (!string.IsNullOrEmpty(Model.MensajeErrorDescripcion)))
+                {
+                    <p class="text-danger">@Model.MensajeErrorDescripcion</p>
+                }
             </div>
             <div class="form-group">
                 <input type="button" value="Guardar" class="btn btn-primary" onclick="OpenModalMio()"/>

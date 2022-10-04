@@ -54,32 +54,58 @@ namespace WebConDocs.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Agregar(clsTipoUsuario objTipoUsuario)
+        public IActionResult Guardar(clsTipoUsuario objTipoUsuario)
         {
             string mensaje = "";
+            string NombreVista = "";
+            int VecesRepetidasNombre = 0;
+            int VecesRepetidasDescripcion = 0;
             try
             {
-                if (!ModelState.IsValid)
+                using (BDHospitalContext db = new BDHospitalContext())
                 {
-                    return View(objTipoUsuario);
-                }
-                else
-                {
-                    using (BDHospitalContext db = new BDHospitalContext())
+                    if (objTipoUsuario.iidTipoUsuario == 0)
                     {
-                        TipoUsuario nuevoTipoUsuario = new TipoUsuario();
-                        nuevoTipoUsuario.Nombre = objTipoUsuario.nombre;
-                        nuevoTipoUsuario.Descripcion = objTipoUsuario.descripcion;
-                        nuevoTipoUsuario.Bhabilitado = 1;
-                        db.TipoUsuarios.Add(nuevoTipoUsuario);
-                        db.SaveChanges();
+                        NombreVista = "Agregar";
+                    }
+                    else
+                    {
+                        NombreVista = "Editar";
+                    }
+
+                    if (objTipoUsuario.iidTipoUsuario == 0)
+                    {
+                        VecesRepetidasNombre = db.TipoUsuarios.Where(x => x.Nombre.Trim().ToUpper() == objTipoUsuario.nombre.Trim().ToUpper()).Count();
+                        VecesRepetidasDescripcion = db.TipoUsuarios.Where(x => x.Descripcion.Trim().ToUpper() == objTipoUsuario.descripcion.Trim().ToUpper()).Count();
+                    }
+
+                    if (!ModelState.IsValid || VecesRepetidasNombre >= 1 || VecesRepetidasDescripcion >= 1)
+                    {
+                        if (VecesRepetidasNombre >= 1)
+                        {
+                            objTipoUsuario.MensajeErrorNombre = "El nombre ya existe.";
+                        }
+                        if (VecesRepetidasDescripcion >= 1)
+                        {
+                            objTipoUsuario.MensajeErrorDescripcion= "La descripcion ya existe.";
+                        }
+                        return View(NombreVista,objTipoUsuario);
+                    }
+                    else
+                    {
+                            TipoUsuario nuevoTipoUsuario = new TipoUsuario();
+                            nuevoTipoUsuario.Nombre = objTipoUsuario.nombre;
+                            nuevoTipoUsuario.Descripcion = objTipoUsuario.descripcion;
+                            nuevoTipoUsuario.Bhabilitado = 1;
+                            db.TipoUsuarios.Add(nuevoTipoUsuario);
+                            db.SaveChanges();
                     }
                 }
             }
             catch (Exception ex)
             {
                 mensaje = ex.Message;
-                return View(objTipoUsuario);
+                return View(NombreVista,objTipoUsuario);
             }
             return RedirectToAction("Index");
         }
