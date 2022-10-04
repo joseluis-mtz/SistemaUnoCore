@@ -51,6 +51,7 @@ namespace WebConDocs.Controllers
         public IActionResult Guardar(clsEspecialidad objEspecialidad)
         {
             string nombreVista = "";
+            int RepeticionNombre = 0;
             try
             {
                 if (objEspecialidad.iidespecialidad == 0)
@@ -63,8 +64,18 @@ namespace WebConDocs.Controllers
                 }
                 using (BDHospitalContext db = new BDHospitalContext())
                 {
-                    if (!ModelState.IsValid)
+                    // Contar las repeticiones del nombre
+                    if (objEspecialidad.iidespecialidad == 0)
                     {
+                        RepeticionNombre = db.Especialidads.Where(x => x.Nombre.ToUpper() == objEspecialidad.nombre.ToUpper()).Count();
+                    }
+
+                    if (!ModelState.IsValid || RepeticionNombre >= 1)
+                    {
+                        if (RepeticionNombre >= 1)
+                        {
+                            objEspecialidad.MensajeError = "El nombre ya existe.";
+                        }
                         return View(nombreVista, objEspecialidad);
                     }
                     else
