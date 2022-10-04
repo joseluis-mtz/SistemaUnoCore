@@ -18,7 +18,7 @@
                 <span asp-validation-for="nombre" class="text-danger"></span>
                 @if (Model != null && (!string.IsNullOrEmpty(Model.MensajeError)))
                 {
-                    <p class="danger">@Model.MensajeError</p>
+                    <p class="text-danger">@Model.MensajeError</p>
                 }
             </div>
 

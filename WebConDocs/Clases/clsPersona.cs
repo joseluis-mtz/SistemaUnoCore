@@ -63,5 +63,7 @@ namespace WebConDocs.Clases
         [Display(Name = "Direccion")]
         [Required(ErrorMessage = "Campo obligatorio")]
         public string direccion { get; set; }
+
+        public string MensajeError { get; set; }
     }
 }

@@ -70,18 +70,40 @@ namespace WebConDocs.Controllers
         }
 
         [HttpPost]
-        public IActionResult Agregar(clsPersona objPersona)
+        public IActionResult Guardar(clsPersona objPersona)
         {
+            string NombreVista = "";
+            int VecesRepetidas = 0;
+            if (objPersona.iidPersona == 0)
+            {
+                NombreVista = "Agregar";
+            }
+            else
+            {
+                NombreVista = "Editar";
+            }
+
             LlenarComboSexo();
+            
             try
             {
-                if (!ModelState.IsValid)
+                using (BDHospitalContext db = new BDHospitalContext())
                 {
-                    return View(objPersona);
-                }
-                else
-                {
-                    using (BDHospitalContext db = new BDHospitalContext())
+                    objPersona.nombreCompleto = objPersona.nombre + " " + objPersona.aPaterno + " " + objPersona.aMaterno;
+                    if (objPersona.iidPersona == 0)
+                    {
+                        VecesRepetidas = db.Personas.Where(x => x.Nombre + " " + x.Appaterno + " " + x.Apmaterno == objPersona.nombreCompleto).Count();
+                    }
+
+                    if (!ModelState.IsValid || VecesRepetidas >=1)
+                    {
+                        if (VecesRepetidas >= 1)
+                        {
+                            objPersona.MensajeError = "El nombre ya existe.";
+                        }
+                        return View(NombreVista, objPersona);
+                    }
+                    else
                     {
                         Persona nuevaPersona = new Persona();
                         nuevaPersona.Nombre = objPersona.nombre;
@@ -96,12 +118,13 @@ namespace WebConDocs.Controllers
                         nuevaPersona.Bhabilitado = 1;
                         db.Personas.Add(nuevaPersona);
                         db.SaveChanges();
+
                     }
                 }
             }
             catch (Exception)
             {
-                return View(objPersona);
+                return View(NombreVista,objPersona);
             }
             return RedirectToAction("Index");
         }
