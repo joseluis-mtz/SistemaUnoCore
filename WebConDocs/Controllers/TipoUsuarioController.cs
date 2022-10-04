@@ -78,6 +78,16 @@ namespace WebConDocs.Controllers
                         VecesRepetidasNombre = db.TipoUsuarios.Where(x => x.Nombre.Trim().ToUpper() == objTipoUsuario.nombre.Trim().ToUpper()).Count();
                         VecesRepetidasDescripcion = db.TipoUsuarios.Where(x => x.Descripcion.Trim().ToUpper() == objTipoUsuario.descripcion.Trim().ToUpper()).Count();
                     }
+                    else
+                    {
+                        VecesRepetidasNombre = db.TipoUsuarios.
+                            Where(x => x.Nombre.Trim().ToUpper() == objTipoUsuario.nombre.Trim().ToUpper() 
+                            && x.Iidtipousuario != objTipoUsuario.iidTipoUsuario).Count();
+                        
+                        VecesRepetidasDescripcion = db.TipoUsuarios.
+                            Where(x => x.Descripcion.Trim().ToUpper() == objTipoUsuario.descripcion.Trim().ToUpper()
+                            && x.Iidtipousuario != objTipoUsuario.iidTipoUsuario).Count();
+                    }
 
                     if (!ModelState.IsValid || VecesRepetidasNombre >= 1 || VecesRepetidasDescripcion >= 1)
                     {

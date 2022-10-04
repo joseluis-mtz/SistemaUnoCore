@@ -67,7 +67,13 @@ namespace WebConDocs.Controllers
                     // Contar las repeticiones del nombre
                     if (objEspecialidad.iidespecialidad == 0)
                     {
-                        RepeticionNombre = db.Especialidads.Where(x => x.Nombre.ToUpper() == objEspecialidad.nombre.ToUpper()).Count();
+                        RepeticionNombre = db.Especialidads.Where(x => x.Nombre.ToUpper().Trim() == objEspecialidad.nombre.ToUpper().Trim()).Count();
+                    }
+                    else
+                    {
+                        RepeticionNombre = db.Especialidads.
+                            Where(x => x.Nombre.ToUpper().Trim() == objEspecialidad.nombre.ToUpper().Trim() 
+                            && x.Iidespecialidad != objEspecialidad.iidespecialidad).Count();
                     }
 
                     if (!ModelState.IsValid || RepeticionNombre >= 1)

@@ -92,7 +92,14 @@ namespace WebConDocs.Controllers
                     objPersona.nombreCompleto = objPersona.nombre.Trim().ToUpper() + " " + objPersona.aPaterno.Trim().ToUpper() + " " + objPersona.aMaterno.Trim().ToUpper();
                     if (objPersona.iidPersona == 0)
                     {
-                        VecesRepetidas = db.Personas.Where(x => x.Nombre.Trim().ToUpper() + " " + x.Appaterno.Trim().ToUpper() + " " + x.Apmaterno.Trim().ToUpper() == objPersona.nombreCompleto).Count();
+                        VecesRepetidas = db.Personas.
+                            Where(x => x.Nombre.Trim().ToUpper() + " " + x.Appaterno.Trim().ToUpper() + " " + x.Apmaterno.Trim().ToUpper() == objPersona.nombreCompleto).Count();
+                    }
+                    else
+                    {
+                        VecesRepetidas = db.Personas.
+                            Where(x => x.Nombre.Trim().ToUpper() + " " + x.Appaterno.Trim().ToUpper() + " " + x.Apmaterno.Trim().ToUpper() == objPersona.nombreCompleto 
+                            && x.Iidpersona != objPersona.iidPersona).Count();
                     }
 
                     if (!ModelState.IsValid || VecesRepetidas >=1)
