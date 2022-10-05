@@ -15,7 +15,7 @@
     <input type="submit" value="Buscar" class="btn btn-info"/>
 </form>
 
-<table class="table">
+<table class="table" id="TablaSedes">
     <thead>
         <tr>
             <th>
@@ -75,5 +75,11 @@
                     frmEliminarSede.submit();
                 }
             })
+    }
+
+    window.onload = function() {
+        $(document).ready( function () {
+            $('#TablaSedes').DataTable();
+        } );
     }
 </script>

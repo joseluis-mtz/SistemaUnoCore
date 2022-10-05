@@ -11,7 +11,7 @@
 
 <form asp-controller="TipoUsuario" asp-action="Index" method="post">
     <input type="submit" value="Buscar" class="btn btn-success"/>
-<table class="table">
+<table class="table" id="TablaTipoUsuarios">
     <thead>
         <tr>
             <th>
@@ -82,5 +82,11 @@
                     frmEliminarTipoUsuario.submit();
                 }
             })
+    }
+
+    window.onload = function() {
+        $(document).ready( function () {
+            $('#TablaTipoUsuarios').DataTable();
+        } );
     }
 </script>

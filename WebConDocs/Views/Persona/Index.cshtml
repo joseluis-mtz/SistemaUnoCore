@@ -14,7 +14,7 @@
     <input type="button" value="Limpiar" class="btn btn-warning" onclick="Limpiar()"/>
 </form>
 
-<table class="table">
+<table class="table" id="TablaPersonas">
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(modelo => modelo.iidPersona)</th>
@@ -63,5 +63,11 @@
                     frmEliminarPersona.submit();
                 }
             })
+    }
+
+    window.onload = function() {
+        $(document).ready( function () {
+            $('#TablaPersonas').DataTable();
+        } );
     }
 </script>

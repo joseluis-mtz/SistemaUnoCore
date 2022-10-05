@@ -16,7 +16,7 @@
     <input type="button" value="Limpiar" class="btn btn-warning" onclick="Limpiar()"/>
 </form>
 
-<table class="table">
+<table class="table" id="TablaPaginas">
     <thead>
         <tr>
             <th>
@@ -83,5 +83,11 @@
                     frmEliminarPagina.submit();
                 }
             })
+    }
+
+    window.onload = function() {
+        $(document).ready( function () {
+            $('#TablaPaginas').DataTable();
+        } );
     }
 </script>

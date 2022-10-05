@@ -13,7 +13,7 @@
     @Html.DropDownList("iidFormaFarmaceutica", listaForma, new {@class= "form form-control"})
 </form>
 
-<table class="table">
+<table class="table" id="TablaMedicamento">
     <thead>
         <tr>
             <th>
@@ -85,5 +85,11 @@
                     frmEliminarMedicamento.submit();
                 }
             })
+    }
+
+    window.onload = function() {
+        $(document).ready( function () {
+            $('#TablaMedicamento').DataTable();
+        } );
     }
 </script>
