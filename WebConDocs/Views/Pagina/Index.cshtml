@@ -52,6 +52,9 @@
             <td>
                 <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarPagina(@item.iidpagina)"></i>
             </td>
+            <td>
+                <a class="fa-solid fa-pen-to-square btn btn-primary" asp-action="Editar" asp-controller="Pagina" asp-route-iidpagina="@item.iidpagina"></a>
+            </td>
         </tr>
 }
     </tbody>

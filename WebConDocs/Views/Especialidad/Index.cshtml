@@ -16,7 +16,7 @@
     <input type="button" value="Limpiar" class="btn btn-warning" onclick="Limpiar()"/>
 </form>
 
-<table class="table">
+<table class="table" id="TablaEspecialidades">
     <thead class="thead-dark">
         <tr>
             <th>ID</th>
@@ -56,14 +56,20 @@
         document.getElementById("buscarEspecialidadForm").submit();
     }
 
-function EliminarEspecialidad(idEspecialidad) 
-{
-    document.getElementById("txtIdEspecialidad").value = idEspecialidad;
-    MostrarModal().then(res => { 
-            if (res.value) {
-                var frmEliminarEspecialidad = document.getElementById("frmEliminarEspecialidad");
-                frmEliminarEspecialidad.submit();
-            }
-        })
+    function EliminarEspecialidad(idEspecialidad) 
+    {
+        document.getElementById("txtIdEspecialidad").value = idEspecialidad;
+        MostrarModal().then(res => { 
+                if (res.value) {
+                    var frmEliminarEspecialidad = document.getElementById("frmEliminarEspecialidad");
+                    frmEliminarEspecialidad.submit();
+                }
+            })
+    }
+
+window.onload = function() {
+    $(document).ready( function () {
+        $('#TablaEspecialidades').DataTable();
+    } );
 }
 </script>

@@ -23,5 +23,7 @@ namespace WebConDocs.Clases
         [MinLength(3,ErrorMessage = "Longitud mínima de 3 caracteres.")]
         [MaxLength(100,ErrorMessage = "Longitud máxima de 100 caracteres.")]
         public string controller { get; set; }
+
+        public string MensajeError { get; set; }
     }
 }
