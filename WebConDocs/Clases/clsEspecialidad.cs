@@ -15,6 +15,6 @@ namespace WebConDocs.Clases
         [Required(ErrorMessage = "La descripción es obligatoria.")]
         public string descripcion { get; set; }
 
-        public string MensajeError { get; set; }
+        public string? MensajeError { get; set; }
     }
 }

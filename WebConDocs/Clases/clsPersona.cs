@@ -64,6 +64,6 @@ namespace WebConDocs.Clases
         [Required(ErrorMessage = "Campo obligatorio")]
         public string direccion { get; set; }
 
-        public string MensajeError { get; set; }
+        public string? MensajeError { get; set; }
     }
 }
