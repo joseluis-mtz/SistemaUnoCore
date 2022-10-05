@@ -17,8 +17,8 @@ namespace WebConDocs.Clases
         [Required(ErrorMessage = "Campo obligatorio")]
         public string descripcion { get; set; }
 
-        public string MensajeErrorNombre { get; set; }
-        public string MensajeErrorDescripcion { get; set; }
+        public string? MensajeErrorNombre { get; set; }
+        public string? MensajeErrorDescripcion { get; set; }
 
     }
 }
