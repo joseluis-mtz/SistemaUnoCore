@@ -40,7 +40,8 @@ namespace WebConDocs.Controllers
                                  iidPersona = persona.Iidpersona,
                                  nombreCompleto = persona.Nombre + " " + persona.Appaterno + " " + persona.Apmaterno,
                                  email = persona.Email,
-                                 nombreSexo = sexos.Nombre
+                                 nombreSexo = sexos.Nombre,
+                                 fechaNacimiento = persona.Fechanacimiento
                              }).ToList();
                 }
                 else
@@ -74,6 +75,7 @@ namespace WebConDocs.Controllers
         {
             string NombreVista = "";
             int VecesRepetidas = 0;
+            int VecesRepetidasCorreo = 0;
             if (objPersona.iidPersona == 0)
             {
                 NombreVista = "Agregar";
@@ -94,37 +96,63 @@ namespace WebConDocs.Controllers
                     {
                         VecesRepetidas = db.Personas.
                             Where(x => x.Nombre.Trim().ToUpper() + " " + x.Appaterno.Trim().ToUpper() + " " + x.Apmaterno.Trim().ToUpper() == objPersona.nombreCompleto).Count();
+                        VecesRepetidasCorreo = db.Personas.Where(x => x.Email.Trim() == objPersona.email.Trim()).Count();
                     }
                     else
                     {
                         VecesRepetidas = db.Personas.
                             Where(x => x.Nombre.Trim().ToUpper() + " " + x.Appaterno.Trim().ToUpper() + " " + x.Apmaterno.Trim().ToUpper() == objPersona.nombreCompleto 
                             && x.Iidpersona != objPersona.iidPersona).Count();
+
+                        VecesRepetidasCorreo = db.Personas.Where(x => x.Email.Trim() == objPersona.email.Trim() 
+                        && x.Iidpersona != objPersona.iidPersona).Count();
                     }
 
-                    if (!ModelState.IsValid || VecesRepetidas >=1)
+                    if (!ModelState.IsValid || VecesRepetidas >=1 || VecesRepetidasCorreo >= 1)
                     {
                         if (VecesRepetidas >= 1)
                         {
                             objPersona.MensajeError = "El nombre ya existe.";
                         }
+
+                        if (VecesRepetidasCorreo >= 1)
+                        {
+                            objPersona.MensajeErrorEmail = "El correo ya existe.";
+                        }
                         return View(NombreVista, objPersona);
                     }
                     else
                     {
-                        Persona nuevaPersona = new Persona();
-                        nuevaPersona.Nombre = objPersona.nombre;
-                        nuevaPersona.Appaterno = objPersona.aPaterno;
-                        nuevaPersona.Apmaterno = objPersona.aMaterno;
-                        nuevaPersona.Telefonofijo = objPersona.telefonoFijo;
-                        nuevaPersona.Telefonocelular = objPersona.telefonoCelular;
-                        nuevaPersona.Fechanacimiento = objPersona.fechaNacimiento;
-                        nuevaPersona.Direccion = objPersona.direccion;
-                        nuevaPersona.Email = objPersona.email;
-                        nuevaPersona.Iidsexo = objPersona.iidSexo;
-                        nuevaPersona.Bhabilitado = 1;
-                        db.Personas.Add(nuevaPersona);
-                        db.SaveChanges();
+                        if (objPersona.iidPersona == 0)
+                        {
+                            Persona nuevaPersona = new Persona();
+                            nuevaPersona.Nombre = objPersona.nombre;
+                            nuevaPersona.Appaterno = objPersona.aPaterno;
+                            nuevaPersona.Apmaterno = objPersona.aMaterno;
+                            nuevaPersona.Telefonofijo = objPersona.telefonoFijo;
+                            nuevaPersona.Telefonocelular = objPersona.telefonoCelular;
+                            nuevaPersona.Fechanacimiento = objPersona.fechaNacimiento;
+                            nuevaPersona.Direccion = objPersona.direccion;
+                            nuevaPersona.Email = objPersona.email;
+                            nuevaPersona.Iidsexo = objPersona.iidSexo;
+                            nuevaPersona.Bhabilitado = 1;
+                            db.Personas.Add(nuevaPersona);
+                            db.SaveChanges();
+                        }
+                        else
+                        {
+                            Persona editarPersona = db.Personas.Where(x => x.Iidpersona == objPersona.iidPersona).First();
+                            editarPersona.Nombre = objPersona.nombre;
+                            editarPersona.Appaterno = objPersona.aPaterno;
+                            editarPersona.Apmaterno = objPersona.aMaterno;
+                            editarPersona.Telefonofijo = objPersona.telefonoFijo;
+                            editarPersona.Telefonocelular = objPersona.telefonoCelular;
+                            editarPersona.Fechanacimiento = objPersona.fechaNacimiento;
+                            editarPersona.Direccion = objPersona.direccion;
+                            editarPersona.Email = objPersona.email;
+                            editarPersona.Iidsexo = objPersona.iidSexo;
+                            db.SaveChanges();
+                        }
 
                     }
                 }
@@ -154,6 +182,40 @@ namespace WebConDocs.Controllers
                 return View();
             }
             return RedirectToAction("Index");
+        }
+
+        public IActionResult Editar(int iidPersona)
+        {
+            string mensaje = "";
+            LlenarComboSexo();
+            clsPersona objPersona = new clsPersona();
+            try
+            {
+                using (BDHospitalContext db = new BDHospitalContext())
+                {
+                    objPersona = (from personas in db.Personas
+                                 where personas.Iidpersona == iidPersona
+                                  select new clsPersona
+                                 {
+                                     iidPersona = personas.Iidpersona,
+                                     nombre = personas.Nombre,
+                                     aPaterno = personas.Appaterno,
+                                     aMaterno = personas.Apmaterno,
+                                     email = personas.Email,
+                                     direccion = personas.Direccion,
+                                     telefonoFijo = personas.Telefonofijo,
+                                     telefonoCelular = personas.Telefonocelular,
+                                     fechaNacimiento = personas.Fechanacimiento == null ? DateTime.Now : personas.Fechanacimiento,
+                                     iidSexo = personas.Iidsexo
+                                  }).First();
+                }
+            }
+            catch (Exception ex)
+            {
+                mensaje = ex.Message;
+                return RedirectToAction("Index");
+            }
+            return View(objPersona);
         }
     }
 }

@@ -21,6 +21,7 @@
             <th>@Html.DisplayNameFor(modelo => modelo.nombreCompleto)</th>
             <th>@Html.DisplayNameFor(modelo => modelo.email)</th>
             <th>@Html.DisplayNameFor(modelo => modelo.nombreSexo)</th>
+            <th>@Html.DisplayNameFor(modelo => modelo.fechaNacimiento)</th>
             <th>Operaciones</th>
         </tr>
     </thead>
@@ -32,9 +33,13 @@
                 <td>@fila.nombreCompleto</td>
                 <td>@fila.email</td>
                 <td>@fila.nombreSexo</td>
+                <td>@fila.fechaNacimiento</td>
                 <td>
                     <i class="fa-solid fa-trash btn btn-danger" onclick="EliminarPersona(@fila.iidPersona)"></i>
                 </td>
+                <td>
+                <a class="fa-solid fa-pen-to-square btn btn-primary" asp-action="Editar" asp-controller="Persona" asp-route-iidPersona="@fila.iidPersona"></a>
+            </td>
             </tr>
         }
     </tbody>

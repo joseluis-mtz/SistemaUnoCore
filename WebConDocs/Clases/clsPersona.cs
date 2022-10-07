@@ -50,7 +50,7 @@ namespace WebConDocs.Clases
 
         [Display(Name = "Fecha nacimiento")]
         [DataType(DataType.Date, ErrorMessage = "El formato de fecha debe ser valido")]
-        [DisplayFormat(DataFormatString ="0:yyyy-MM-dd", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage ="Campo obligatorio")]
         public DateTime? fechaNacimiento { get; set; }
 
@@ -65,5 +65,6 @@ namespace WebConDocs.Clases
         public string direccion { get; set; }
 
         public string? MensajeError { get; set; }
+        public string? MensajeErrorEmail { get; set; }
     }
 }
