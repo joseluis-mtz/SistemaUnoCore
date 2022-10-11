@@ -23,6 +23,7 @@
             <th>@Html.DisplayNameFor(modelo => modelo.nombreSexo)</th>
             <th>@Html.DisplayNameFor(modelo => modelo.fechaNacimiento)</th>
             <th>Operaciones</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -39,7 +40,7 @@
                 </td>
                 <td>
                 <a class="fa-solid fa-pen-to-square btn btn-primary" asp-action="Editar" asp-controller="Persona" asp-route-iidPersona="@fila.iidPersona"></a>
-            </td>
+                </td>
             </tr>
         }
     </tbody>
